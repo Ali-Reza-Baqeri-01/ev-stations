@@ -6,33 +6,32 @@ defineProps<{ status: StationStatus }>()
 </script>
 
 <template>
-    <span class="badge" :class="`badge--${status}`">
-        {{ statusLabels[status] }}
-    </span>
+    <span class="badge" :class="`badge--${status}`">{{ statusLabels[status] }}</span>
 </template>
 
 <style scoped>
 .badge {
     flex-shrink: 0;
-    padding: 3px 8px;
-    border-radius: 999px;
-    font-size: 0.6875rem;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-size: 0.625rem;
     font-weight: 500;
+    letter-spacing: 0.01em;
     white-space: nowrap;
 }
 
 .badge--available {
-    background: #e6f6ec;
-    color: #1a7f42;
+    background: var(--success-bg);
+    color: var(--success-text);
 }
 
 .badge--occupied {
-    background: #fff4e0;
-    color: #a35c00;
+    background: var(--warning-bg);
+    color: var(--warning-text);
 }
 
 .badge--offline {
-    background: #f2f3f5;
-    color: #6b7280;
+    background: var(--neutral-bg);
+    color: var(--neutral-text);
 }
 </style>

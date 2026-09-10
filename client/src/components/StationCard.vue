@@ -21,7 +21,7 @@ const connectorTypes = computed(() => [
                 <p class="card__address">
                     {{ station.address.street }}, {{ station.address.city }}
                 </p>
-                <p class="card__operator">Operated by {{ station.operator }}</p>
+                <p class="card__operator">{{ station.operator }}</p>
             </div>
 
             <StatusBadge :status="station.status" />
@@ -30,7 +30,7 @@ const connectorTypes = computed(() => [
         <p class="card__power">
             <span class="card__power-value">{{ power }}</span>
             <span class="card__power-unit">
-                kW max · {{ points }} charging {{ points === 1 ? 'point' : 'points' }}
+                kW max · {{ points }} {{ points === 1 ? 'point' : 'points' }}
             </span>
         </p>
 
@@ -42,7 +42,13 @@ const connectorTypes = computed(() => [
 
         <footer class="card__footer">
             <span class="card__price">{{ formatPrice(station) }}</span>
-            <span>{{ station.openingHours }}</span>
+            <span class="card__cta">
+                Details
+                <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
+                    <path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </span>
         </footer>
     </article>
 </template>
@@ -52,15 +58,15 @@ const connectorTypes = computed(() => [
     display: flex;
     flex-direction: column;
     gap: 0.625rem;
-    padding: 0.875rem 1rem;
-    border: 1px solid #e2e5ea;
-    border-radius: 12px;
-    background: #fff;
-    transition: border-color 0.15s;
+    padding: 0.8125rem 0.9375rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    transition: border-color 0.12s ease;
 }
 
 .card--offline {
-    opacity: 0.65;
+    opacity: 0.55;
 }
 
 .card__top {
@@ -76,69 +82,77 @@ const connectorTypes = computed(() => [
 
 .card__name {
     margin: 0;
-    font-size: 0.9375rem;
-    font-weight: 600;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: -0.005em;
 }
 
 .card__address {
     margin: 0.125rem 0 0;
-    font-size: 0.8125rem;
-    color: #5a6472;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
 }
 
 .card__operator {
-    margin: 0.25rem 0 0;
-    font-size: 0.75rem;
-    color: #8b95a3;
+    margin: 0.1875rem 0 0;
+    font-size: 0.6875rem;
+    color: var(--text-muted);
 }
 
 .card__power {
     display: flex;
     align-items: baseline;
-    gap: 0.375rem;
+    gap: 0.3125rem;
     margin: 0;
 }
 
 .card__power-value {
-    font-size: 1.375rem;
-    font-weight: 600;
+    font-size: 1.25rem;
+    font-weight: 500;
     line-height: 1;
+    letter-spacing: -0.02em;
 }
 
 .card__power-unit {
-    font-size: 0.8125rem;
-    color: #5a6472;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
 }
 
 .types {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.375rem;
+    gap: 0.25rem;
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
 .types__item {
-    padding: 0.1875rem 0.5625rem;
-    border-radius: 999px;
-    background: #eef3fd;
-    color: #1d4ed8;
-    font-size: 0.75rem;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: var(--surface-muted);
+    color: var(--text-secondary);
+    font-size: 0.6875rem;
 }
 
 .card__footer {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-    padding-top: 0.625rem;
-    border-top: 1px solid #f0f2f5;
-    font-size: 0.8125rem;
-    color: #5a6472;
+    padding-top: 0.5625rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.75rem;
 }
 
 .card__price {
-    color: #1a1f2b;
     font-weight: 500;
+}
+
+.card__cta {
+    display: flex;
+    align-items: center;
+    gap: 0.1875rem;
+    color: var(--text-secondary);
 }
 </style>

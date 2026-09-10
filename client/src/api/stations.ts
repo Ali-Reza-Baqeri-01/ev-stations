@@ -12,7 +12,7 @@ async function request<T>(path: string): Promise<T> {
     }
 
     if (response.status === 404) {
-        throw new Error('Not found')
+        throw new Error('This station does not exist or is no longer available.')
     }
 
     if (!response.ok) {

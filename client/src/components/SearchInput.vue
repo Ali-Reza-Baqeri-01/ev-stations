@@ -1,16 +1,13 @@
 <script setup lang="ts">
-defineProps<{ modelValue: string; resultCount: number }>()
+defineProps<{ modelValue: string }>()
 defineEmits<{ 'update:modelValue': [value: string] }>()
 </script>
 
 <template>
     <div class="search">
-        <input class="search__input" type="search" placeholder="Search by name, operator or city"
+        <input class="search__input" type="search" placeholder="Search name, operator or city"
             aria-label="Search stations" :value="modelValue"
             @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)" />
-        <p class="search__count">
-            {{ resultCount }} {{ resultCount === 1 ? 'station' : 'stations' }}
-        </p>
     </div>
 </template>
 
@@ -18,29 +15,45 @@ defineEmits<{ 'update:modelValue': [value: string] }>()
 .search {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.875rem;
+    min-width: 0;
 }
 
 .search__input {
-    flex: 1;
-    min-width: 0;
-    padding: 0.5625rem 0.75rem;
-    border: 1px solid #d7dbe2;
-    border-radius: 8px;
-    font-size: 0.875rem;
+    width: 280px;
+    max-width: 100%;
+    padding: 0.375rem 0.625rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
     font-family: inherit;
-    background: #fff;
+    font-size: 0.8125rem;
+    color: var(--text-primary);
+    background: var(--surface);
+}
+
+.search__input::placeholder {
+    color: var(--text-muted);
 }
 
 .search__input:focus {
     outline: none;
-    border-color: #2f6fed;
+    border-color: var(--border-strong);
 }
 
 .search__count {
-    margin: 0;
     font-size: 0.75rem;
-    color: #8b95a3;
+    color: var(--text-muted);
     white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+    .search__input {
+        flex: 1;
+        width: auto;
+    }
+
+    .search__count {
+        display: none;
+    }
 }
 </style>

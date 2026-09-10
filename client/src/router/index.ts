@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import StationsListView from '../views/StationsListView.vue'
 import StationDetailView from '../views/StationDetailView.vue'
+import NotFoundView from '../views/NotFoundView.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -14,6 +15,11 @@ const router = createRouter({
             path: '/detail/:id',
             name: 'station-detail',
             component: StationDetailView,
+        },
+        {
+            path: '/:pathMatch(.*)*',
+            name: 'not-found',
+            component: NotFoundView,
         },
     ],
 })

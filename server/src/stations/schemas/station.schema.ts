@@ -71,4 +71,14 @@ export class Station {
 
 export const StationSchema = SchemaFactory.createForClass(Station);
 
+StationSchema.set('toJSON', {
+  virtuals: true,
+  versionKey: false,
+  transform: (_doc, ret: Record<string, any>) => {
+    ret.id = ret._id.toString();
+    delete ret._id;
+    return ret;
+  },
+});
+
 StationSchema.index({ location: '2dsphere' });

@@ -1,6 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
+import { STATION_STATUSES } from '../dto/find-stations-query.dto';
+
 export type StationDocument = HydratedDocument<Station>;
 
 @Schema({ _id: false })
@@ -47,7 +49,7 @@ export class Station {
   @Prop({ required: true })
   operator: string;
 
-  @Prop({ required: true, enum: ['available', 'occupied', 'offline'] })
+  @Prop({ required: true, enum: STATION_STATUSES })
   status: string;
 
   @Prop({ type: Address, required: true })

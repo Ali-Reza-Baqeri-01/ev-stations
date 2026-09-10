@@ -86,6 +86,19 @@ Base URL: `http://localhost:3000`
 
 Un `id` inesistente restituisce `404 Not Found` con un messaggio descrittivo.
 
+### Parametri di query (facoltativi)
+
+`GET /stations` accetta due parametri opzionali, validati tramite DTO e `class-validator`:
+
+| Parametro | Valori                                  | Descrizione                                      |
+| --------- | --------------------------------------- | ------------------------------------------------ |
+| `search`  | testo libero (max 100 caratteri)        | Filtra per nome, operatore o città               |
+| `status`  | `available`, `occupied`, `offline`      | Filtra per stato della stazione                  |
+
+Esempio: `GET /stations?search=roma&status=available`
+
+Un valore non ammesso restituisce `400 Bad Request` con un messaggio descrittivo. Il filtro di ricerca del frontend resta lato client, come da traccia; i parametri di query sono un'aggiunta lato API.
+
 ### Nota sul naming delle rotte
 
 La traccia indicava `GET /posts` e `GET /posts/:id`, denominazione ereditata dall'Opzione A (JSONPlaceholder). Poiché il dominio applicativo è quello delle colonnine di ricarica, le rotte sono state rinominate in `/stations` e `/stations/:id`: la struttura e il comportamento richiesti restano invariati, cambia solo il nome della risorsa in modo coerente con i dati esposti.

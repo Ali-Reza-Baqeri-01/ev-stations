@@ -86,6 +86,19 @@ Base URL: `http://localhost:3000`
 
 An unknown `id` returns `404 Not Found` with a descriptive message.
 
+### Query parameters (optional)
+
+`GET /stations` accepts two optional parameters, validated with a DTO and `class-validator`:
+
+| Parameter | Values                             | Description                          |
+| --------- | ---------------------------------- | ------------------------------------ |
+| `search`  | free text (max 100 characters)     | Filters by name, operator or city    |
+| `status`  | `available`, `occupied`, `offline` | Filters by station status            |
+
+Example: `GET /stations?search=roma&status=available`
+
+An invalid value returns `400 Bad Request` with a descriptive message. The frontend search filter remains client-side as specified in the brief; these query parameters are an API-level addition.
+
 ### A note on route naming
 
 The brief specified `GET /posts` and `GET /posts/:id`, a naming inherited from Option A (JSONPlaceholder). Since the domain here is EV charging stations, the routes were renamed to `/stations` and `/stations/:id`. The required structure and behaviour are unchanged — only the resource name differs, to stay consistent with the data being exposed.

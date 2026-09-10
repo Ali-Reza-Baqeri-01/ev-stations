@@ -1,20 +1,30 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, OnModuleInit, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Station, StationDocument } from './schemas/station.schema';
+import { stationsSeed } from './data/stations.seed';
 
 @Injectable()
-export class StationsService {
-    private readonly stations = [
-        { id: "1", name: "station 1" },
-        { id: "2", name: "station 2" },
-        { id: "3", name: "station 3" },
-    ]
+export class StationsService implements OnModuleInit {
+    constructor(
+        @InjectModel(Station.name)
+        private readonly stationModel: Model<StationDocument>,
+    ) { }
 
+    async onModuleInit() {
+        const count = await this.stationModel.estimatedDocumentCount();
 
-    findAll() {
-        return this.stations;
+        if (count === 0) {
+            await this.stationModel.insertMany(stationsSeed);
+        }
     }
 
-    findOne(id: string) {
-        const station = this.stations.find((s) => s.id === id);
+    async findAll() {
+        return this.stationModel.find().exec();
+    }
+
+    async findOne(id: string) {
+        const station = await this.stationModel.findById(id).exec();
 
         if (!station) {
             throw new NotFoundException(`Station with id "${id}" not found`);

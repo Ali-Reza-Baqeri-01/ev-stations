@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model, isValidObjectId } from 'mongoose';
+import { InjectConnection, InjectModel } from '@nestjs/mongoose';
+import { Connection, Model, isValidObjectId } from 'mongoose';
 import type { QueryFilter } from 'mongoose';
 import { Station, StationDocument } from './schemas/station.schema';
 import { FindStationsQueryDto } from './dto/find-stations-query.dto';
@@ -15,10 +15,14 @@ export class StationsService implements OnModuleInit {
     constructor(
         @InjectModel(Station.name)
         private readonly stationModel: Model<StationDocument>,
+        @InjectConnection()
+        private readonly connection: Connection,
     ) { }
 
     async onModuleInit() {
-        const count = await this.stationModel.estimatedDocumentCount();
+        await this.connection.asPromise();
+
+        const count = await this.stationModel.countDocuments();
 
         if (count === 0) {
             await this.stationModel.insertMany(stationsSeed);
